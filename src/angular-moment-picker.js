@@ -32,7 +32,7 @@
 		return momentPickerProvider;
 	})();
 
-	var $timeout, $sce, $compile, $document, $window, momentPicker;
+	var $timeout, $interval, $sce, $compile, $document, $window, momentPicker;
 
 	var MomentPickerDirective = (function () {
 
@@ -53,7 +53,7 @@
 		}
 
 		// Directive
-		function MomentPickerDirective(timeout, sce, compile, document, window, momentPickerProvider) {
+		function MomentPickerDirective(timeout, interval, sce, compile, document, window, momentPickerProvider) {
 			this.restrict = 'A',
 				this.scope = {
 					model:     '=momentPicker',
@@ -72,13 +72,14 @@
 					horizontalOffset: '=?'
 				};
 			$timeout     = timeout;
+			$interval    = interval;
 			$sce         = sce;
 			$compile     = compile;
 			$document    = document;
 			$window      = window;
 			momentPicker = momentPickerProvider;
 		};
-		MomentPickerDirective.prototype.$inject = ['$timeout', '$sce', '$compile', '$document', '$window', 'momentPicker'];
+		MomentPickerDirective.prototype.$inject = ['$timeout', '$interval', '$sce', '$compile', '$document', '$window', 'momentPicker'];
 		MomentPickerDirective.prototype.link = function ($scope, $element, $attrs) {
 			$scope.containerStyle = {
 				right: -1000
@@ -232,7 +233,7 @@
 						((angular.element(element).scope().view || {}).close || angular.noop)();
 					});
 					if (!$scope.disabled) $scope.view.isOpen = true;
-					$timeout($scope.view.position, 0, false);
+					$interval($scope.view.position, 100, 3);
 				},
 				close: function () {
 					$scope.view.isOpen = false;
@@ -645,9 +646,9 @@
 			return new momentPickerProvider();
 		}])
 		.directive('momentPicker', [
-			'$timeout', '$sce', '$compile', '$document', '$window', 'momentPicker',
-			function ($timeout, $sce, $compile, $document, $window, momentPicker) {
-				return new MomentPickerDirective($timeout, $sce, $compile, $document, $window, momentPicker);
+			'$timeout', '$interval', '$sce', '$compile', '$document', '$window', 'momentPicker',
+			function ($timeout, $interval, $sce, $compile, $document, $window, momentPicker) {
+				return new MomentPickerDirective($timeout, $interval, $sce, $compile, $document, $window, momentPicker);
 			}
 		]);
 
