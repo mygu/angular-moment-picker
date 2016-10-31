@@ -87,6 +87,7 @@
 .moment-picker.left .moment-picker-container:after {
     left: auto;
     right: 15px;
+    display: none;
 }
 
 .moment-picker.left .moment-picker-container:after {

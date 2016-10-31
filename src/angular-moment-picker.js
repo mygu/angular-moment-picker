@@ -276,6 +276,11 @@
 						$scope.containerStyle.left = left + picker.offsetWidth;
 						$scope.containerStyle.right = 'auto';
 					}
+
+					$scope.containerStyle.left = ((winWidth - ($scope.horizontalOffset ? $scope.horizontalOffset : 0)) / 2 - container.offsetWidth / 2) + 'px';
+					$scope.containerStyle.right = 'auto';
+					$scope.containerStyle.top = ((winHeight - ($scope.verticalOffset ? $scope.verticalOffset : 0)) / 2 - container.offsetHeight / 2) + 'px';
+					$scope.containerStyle.bottom = 'auto';
 				},
 				// utility
 				unit: function () { return $scope.view.selected == 'decade' ? 10 : 1; },
